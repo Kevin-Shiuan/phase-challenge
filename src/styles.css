@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+}
+
+h4 {
+  line-height: 2;
+  margin: 0;
+  font-weight: 900;
+  color: gray;
+}
+label {
+  color: gray;
+}
+
+strong {
+  color: #0274ff;
+}
