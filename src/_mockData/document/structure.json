@@ -1,0 +1,26 @@
+{
+  "documentId": "documentId",
+  "pages": [
+    {
+      "id": "pageId1",
+      "frames": [
+        {
+          "id": "frameId1",
+          "childrenFrames": []
+        },
+        {
+          "id": "frameId2",
+          "childrenFrames": []
+        },
+        {
+          "id": "frameId3",
+          "childrenFrames": []
+        }
+      ]
+    },
+    {
+      "id": "pageId2",
+      "frames": []
+    }
+  ]
+}

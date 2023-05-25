@@ -1,0 +1,25 @@
+{
+  "type": "frame",
+  "id": "",
+  "name": "",
+  "position": {
+    "x": 0,
+    "y": 0
+  },
+  "size": {
+    "width": 0,
+    "height": 0
+  },
+  "parentId": "",
+  "childrenIds": [],
+  "style": {
+    "backgroundColor": "",
+    "opacity": 1,
+    "border": {
+      "borderColor": "",
+      "borderWidth": 0,
+      "borderRadius": 0
+    },
+    "fill": "#ffffff"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "page",
+  "id": "pageId2",
+  "name": "page2",
+  "size": {
+    "width": 0,
+    "height": 0
+  },
+  "parent": "",
+  "children": [],
+  "style": {
+    "backgroundColor": "#f5f5f5"
+  }
+}
