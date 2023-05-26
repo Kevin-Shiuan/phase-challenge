@@ -1,19 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import App from "./App";
-import "./styles.css";
+import App from './App';
+import './styles.css';
 
-// redux
-import store from './redux/Store'
-import { Provider } from 'react-redux'
+// recoil
+import { RecoilRoot } from 'recoil';
 
-const rootElement = document.getElementById("root");
+const rootElement = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-    <App />
-    </Provider>
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
   </React.StrictMode>,
   rootElement
 );
