@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LeftPanel from './leftPanel/LeftPanel';
 import Canvas from './canvas/Canvas';
-import RightPanel from './rightPanel/RightPanel';
+import RightPanelControl from './rightPanel/RightPanel';
 
 const AppWrapper = styled.div`
   display: grid;
@@ -17,7 +17,7 @@ const App = () => {
     <AppWrapper>
       <LeftPanel />
       <Canvas />
-      <RightPanel />
+      <RightPanelControl />
     </AppWrapper>
   );
 };
