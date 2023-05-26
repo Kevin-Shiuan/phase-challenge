@@ -10,7 +10,7 @@
     "width": 50,
     "height": 50
   },
-  "parentId": "pageId1",
+  "paren˝Id": "pageId1",
   "childrenIds": [],
 
   "fill": "#00ff33",
@@ -20,5 +20,4 @@
     "borderWidth": 0,
     "borderRadius": 0
   }
-  
 }
