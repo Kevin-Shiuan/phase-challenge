@@ -12,14 +12,12 @@
   },
   "parentId": "pageId1",
   "childrenIds": [],
-  "style": {
-    "backgroundColor": "",
-    "opacity": 0.5,
-    "border": {
-      "borderColor": "",
-      "borderWidth": 0,
-      "borderRadius": 0
-    },
-    "fill": "#00ff33"
+
+  "fill": "#00ff33",
+  "o": 0.5,
+  "border": {
+    "borderColor": "",
+    "borderWidth": 0,
+    "borderRadius": 0
   }
 }
