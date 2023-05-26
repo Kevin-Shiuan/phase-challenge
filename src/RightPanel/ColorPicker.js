@@ -17,7 +17,7 @@ const ColorInput = styled.input`
 ColorInput.defaultProps = {
   type: "color"
 };
-const ColorPicker = () => {
+const ColorPicker = ({value}) => {
   const ref = useRef();
   const inputRef = useRef();
   useEffect(() => {
@@ -25,7 +25,7 @@ const ColorPicker = () => {
   }, []);
   return (
     <ColorPickerWrapper ref={ref}>
-      <ColorInput value="#00FF00" ref={inputRef} />
+      <ColorInput defaultValue={value} ref={inputRef} />
     </ColorPickerWrapper>
   );
 };

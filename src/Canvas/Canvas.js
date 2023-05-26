@@ -1,5 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
+// data
+import { documentStructure } from '../_mockData/document';
+// redux
+// import { useSelector } from 'react-redux';
+// components
+import Frame from './Frame';
+// import { selectPage } from '../redux/activePageSlice';
 
 const CanvasWrapper = styled.div`
   position: relative;
@@ -7,23 +14,19 @@ const CanvasWrapper = styled.div`
   overflow: hidden;
 `;
 
-const Block = styled.div`
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  left: ${(props) => props.x}px;
-  top: ${(props) => props.y}px;
-  opacity: ${(props) => props.o};
-  background: green;
-  outline: ${(props) => (props.active ? 1 : 0)}px solid #0274ff;
-`;
-
 const Canvas = () => {
+  let pageId = 'pageId1';
+  const frames = documentStructure.pages.find((page) => pageId === page.id).frames.flat(Infinity);
+
   return (
     <CanvasWrapper>
-      <Block x={10} y={10} o={1} active />
+      {/* <Frame id={'frameId1'}></Frame> */}
+      {frames.map((frame) => (
+        <Frame key={frame.id} id={frame.id} />
+      ))}
+      {/* <Block x={10} y={10} o={1} active />
       <Block x={60} y={60} o={0.5} />
-      <Block x={110} y={110} o={1} />
+      <Block x={110} y={110} o={1} /> */}
     </CanvasWrapper>
   );
 };
