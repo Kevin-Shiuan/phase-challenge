@@ -1,12 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-// data
-import { documentStructure } from '../_mockData/document';
-// redux
-// import { useSelector } from 'react-redux';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+// recoil's state
+import { activePageState, frameSelector } from '../recoil';
 // components
 import Frame from './Frame';
-// import { selectPage } from '../redux/activePageSlice';
 
 const CanvasWrapper = styled.div`
   position: relative;
@@ -15,16 +13,15 @@ const CanvasWrapper = styled.div`
 `;
 
 const Canvas = () => {
-  let pageId = 'pageId1';
-  const frames = documentStructure.pages.find((page) => pageId === page.id).frames.flat(Infinity);
-
+  const page = useRecoilValue(activePageState);
+  const unSelect = useSetRecoilState(frameSelector(''));
   return (
-    <CanvasWrapper>
+    <CanvasWrapper onMouseDown={(e) => e.currentTarget === e.target && unSelect()}>
       {/* <Frame id={'frameId1'}></Frame> */}
-      {frames.map((frame) => (
-        <Frame key={frame.id} id={frame.id} />
+      {page.children.map((frame) => (
+        <Frame key={frame} id={frame} />
       ))}
-      {/* <Block x={10} y={10} o={1} active />
+      {/* <Block x={10} y={10} o={1} selected />
       <Block x={60} y={60} o={0.5} />
       <Block x={110} y={110} o={1} /> */}
     </CanvasWrapper>

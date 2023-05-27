@@ -1,59 +1,141 @@
-import { atom, selectorFamily } from 'recoil';
-import { documentPages, documentFrames } from '../_mockData/document/index.js';
+import { atom, selector, selectorFamily } from 'recoil';
+import document, { documentPages, documentFrames } from '../_mockData/document/index.js';
 
-export const activeFrameState = atom({
-  key: 'activeFrame',
-  default: '',
+// setup atoms for documents
+export const documentState = atom({
+  key: 'document',
+  default: document,
 });
 
-export const activePageState = atom({
-  key: 'activePage',
-  default: '',
-});
-
-export const pageStates = documentPages.map((page) => {
+// setup atoms for each frame and page
+const pageStateArr = documentPages.map((page, index) => {
   return {
     id: page.id,
     atom: atom({
       key: page.id,
-      default: { ...page, active: false },
+      default: { ...page, selected: !index },
     }),
   };
 });
 
-export const frameStates = documentFrames.map((frame) => {
+const frameStateArr = documentFrames.map((frame) => {
   return {
     id: frame.id,
     atom: atom({
       key: frame.id,
-      default: { ...frame, active: false },
+      default: { ...frame, selected: false },
     }),
   };
 });
 
-export const frameSelectorState = selectorFamily({
+// export the state for selected frame and page
+export const activeFrameIdState = atom({
+  key: 'activeFrameId',
+  default: '',
+});
+
+export const activePageIdState = atom({
+  key: 'activePageId',
+  default: document.pages[0],
+});
+
+export const activePageState = selector({
+  key: 'activePageState',
+  get: ({ get }) => {
+    return get(pageStateArr.find((page) => page.id === get(activePageIdState)).atom);
+  },
+});
+
+// functions to update the selected frame and page
+export const frameSelector = selectorFamily({
   key: 'frameSelect',
   get:
     (frameId) =>
     ({ get }) => {
-      // return get(frameStates.find((frameState) => frameState.id === frameId).atom).id === get(activeFrameState);
       return {
-        ...get(frameStates.find((frameState) => frameState.id === frameId).atom),
-        active: frameId === get(activeFrameState),
+        ...get(frameStateArr.find((frameState) => frameState.id === frameId).atom),
+        selected: frameId === get(activeFrameIdState),
       };
     },
   set:
     (frameId) =>
     ({ set, get }, newValue) => {
-      if (!!get(activeFrameState))
-        set(frameStates.find((frameState) => frameState.id === get(activeFrameState)).atom, {
-          ...get(frameStates.find((frameState) => frameState.id === get(activeFrameState)).atom),
-          active: false,
+      const activeFrameId = get(activeFrameIdState);
+      // if the frame is already selected, do nothing
+      if (activeFrameId === frameId) return;
+      // unselect the previous selected frame
+      if (!!activeFrameId)
+        set(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, {
+          ...get(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom),
+          selected: false,
         });
-      set(frameStates.find((frameState) => frameState.id === frameId).atom, {
-        ...get(frameStates.find((frameState) => frameState.id === frameId).atom),
-        active: true,
+      // select the new frame
+      if (!!frameId)
+        set(frameStateArr.find((frameState) => frameState.id === frameId).atom, {
+          ...get(frameStateArr.find((frameState) => frameState.id === frameId).atom),
+          selected: true,
+        });
+      // update the active frame id
+      set(activeFrameIdState, frameId);
+    },
+});
+
+export const pageSelector = selectorFamily({
+  key: 'pageSelect',
+  get:
+    (pageId) =>
+    ({ get }) => {
+      return {
+        ...get(pageStateArr.find((pageState) => pageState.id === pageId).atom),
+        selected: pageId === get(activePageIdState),
+      };
+    },
+  set: (pageId) => {
+    return ({ set, get }, newValue) => {
+      const activePageId = get(activePageIdState);
+      // if the page is already selected, do nothing
+      if (activePageId === pageId) return;
+      // unselect the previous selected page
+      if (!!activePageId)
+        set(pageStateArr.find((pageState) => pageState.id === activePageId).atom, {
+          ...get(pageStateArr.find((pageState) => pageState.id === activePageId).atom),
+          selected: false,
+        });
+      // select the new page
+      set(pageStateArr.find((pageState) => pageState.id === pageId).atom, {
+        ...get(pageStateArr.find((pageState) => pageState.id === pageId).atom),
+        selected: true,
       });
-      set(activeFrameState, frameId);
+      // update the active page id
+      set(activePageIdState, pageId);
+      const activeFrameId = get(activeFrameIdState);
+      // unselect the frame
+      if (!!activeFrameId)
+        set(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, {
+          ...get(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom),
+          selected: false,
+        });
+      set(activeFrameIdState, '');
+    };
+  },
+});
+
+// temporary function for getting the frame state
+// the follwing function shouldn't be in pratical use as frameStateArr is not a good approach to set the atom
+export const frameState = selectorFamily({
+  key: 'frameState',
+  get:
+    (frameId) =>
+    ({ get }) => {
+      return get(frameStateArr.find((frame) => frame.id === frameId).atom);
+    },
+});
+
+export const pageState = selectorFamily({
+  key: 'pageState',
+  get:
+    (pageId) =>
+    ({ get }) => {
+      return get(pageStateArr.find((page) => page.id === pageId).atom);
     },
 });

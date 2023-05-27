@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import {  useSetRecoilState, useRecoilValue } from 'recoil';
-import { frameStates, frameSelectorState } from '../recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { frameSelector, frameState } from '../recoil';
 
 const Block = styled.div`
   position: absolute;
@@ -11,27 +11,19 @@ const Block = styled.div`
   top: ${(props) => props.position.y}px;
   opacity: ${(props) => props.o};
   background: green;
-  outline: ${(props) => (props.active ? 1 : 0)}px solid #0274ff;
+  outline: ${(props) => (props.selected ? 1 : 0)}px solid #0274ff;
 `;
 
 const Frame = ({ id }) => {
   // recoil
   // get the state of the desire frame
-  const frame = useRecoilValue(frameStates.find((frame) => frame.id === id).atom);
+  const frame = useRecoilValue(frameState(id));
   // update function to update the active frame
-  const updateSlectedFrame = useSetRecoilState(frameSelectorState(id));
+  const updateSlectedFrame = useSetRecoilState(frameSelector(id));
 
   return (
-    <Block
-      {...frame}
-      onClick={(e) => {
-        // setNewActiveFrame(id);
-        updateSlectedFrame();
-      }}
-    >
-      {frame.childrenIds.length
-        ? frame.childrenIds.map((childId) => <Frame key={childId} id={childId} />)
-        : null}
+    <Block {...frame} onClick={() => updateSlectedFrame()}>
+      {frame.childrenIds.length ? frame.childrenIds.map((childId) => <Frame key={childId} id={childId} />) : null}
     </Block>
   );
 };

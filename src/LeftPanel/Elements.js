@@ -1,21 +1,34 @@
 import React from 'react';
-import styled from 'styled-components';
-import { documentStructure } from '../_mockData/document';
-import Element from './Element';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+// import styled from 'styled-components';
+import { frameState, frameSelector, activePageState } from '../recoil';
 
-const ElementsWrapper = styled.div``;
+// const ElementsWrapper = styled.div``;
 const Elements = () => {
-  let pageId = 'pageId1';
-  const frames = documentStructure.pages.find((page) => pageId === page.id).frames.flat(Infinity);
-  console.log(frames);
+  const page = useRecoilValue(activePageState);
 
   return (
-    <ElementsWrapper>
+    <div>
       <h4>Elements</h4>
-      {frames.map((frame) => (
-        <Element key={frame.id} id={frame.id} />
+      {page.children.map((frame) => (
+        <Element key={frame} id={frame} />
       ))}
-    </ElementsWrapper>
+    </div>
+  );
+};
+
+const Element = ({ id }) => {
+  // recoil
+  // get the state of the desire frame
+  const frame = useRecoilValue(frameState(id));
+
+  // update function to update the selected frame
+  const updateSlectedFrame = useSetRecoilState(frameSelector(id));
+
+  return (
+    <div onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem' }}>
+      {frame.selected ? <strong>{frame.name}</strong> : frame.name}
+    </div>
   );
 };
 
