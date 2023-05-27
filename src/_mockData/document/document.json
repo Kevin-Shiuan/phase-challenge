@@ -1,0 +1,5 @@
+{
+  "documentId": "documentId",
+  "pages": ["pageId1", "pageId2"],
+  "backgroundColor": "#f5f5f5"
+}
