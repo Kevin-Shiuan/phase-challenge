@@ -16,6 +16,10 @@
 1. Perform testing
 
 # Record of development
-## May 25
+## May 26
 1. Defined the data structure
 1. Generated Mock data
+1. Set up states manager (Recoil)
+1. Implemented function:
+    1. Element selection
+    1. (undergoing)Modifying elements' properties
