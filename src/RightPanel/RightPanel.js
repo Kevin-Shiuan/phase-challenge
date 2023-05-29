@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import ColorPicker from './ColorPicker';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { activeFrameState, frameStates } from '../recoil';
+import { activeFrameIdState, frameState } from '../recoil';
 const RightPanelWrapper = styled.div`
   padding: 8px;
 `;
@@ -12,24 +12,33 @@ const Label = styled.label`
   grid-gap: 8px;
 `;
 
-const RightPanelControl = () => {
-  const activeFrameId = useRecoilValue(activeFrameState);
-  return !!activeFrameId ? <RightPanel id={activeFrameId} /> : null;
+const RightPanel = () => {
+  const activeFrameId = useRecoilValue(activeFrameIdState);
+  return !!activeFrameId ? <RightPanelForm id={activeFrameId} /> : null;
 };
 
-const RightPanel = ({ id }) => {
-  const [frame, setFrame] = useRecoilState(frameStates.find((frame) => frame.id === id)?.atom);
+const RightPanelForm = ({ id }) => {
+  const [frame, setFrame] = useRecoilState(frameState(id));
 
-  // const X = useRef();
-  // const Y = useRef();
-  // const OText = useRef();
-  // const OSlider = useRef();
-  // const B = useRef();
+  // set ref to the input in order to update the value
+  const XRef = useRef();
+  const YRef = useRef();
+  // update the value of the input either when the frame position changes or another frame is selected
+  useEffect(() => {
+    XRef.current.value = frame.position.x;
+    YRef.current.value = frame.position.y;
+  }, [frame]);
 
-  const handleChange = () => {
-    // better to validate before updating
-    // setFrame({ ...frame, position: { x: X.current.value, y: Y.current.value }, o: OText.current.value / 100 });
-    console.log();
+  const handleChange = (properties) => {
+    Object.entries(properties).forEach(([key, value]) => {
+      console.log(frame[key]);
+      // value !=='' cant validate for empty position.x or position.y
+      // improve: should use other method to check
+      if (frame[key] !== value && value !== '') {
+        // improve: should validate the value
+        setFrame({ ...frame, ...properties });
+      }
+    });
   };
 
   return (
@@ -38,12 +47,13 @@ const RightPanel = ({ id }) => {
         X{' '}
         <input
           type="number"
+          ref={XRef}
           min={0}
           max={999}
-          defaultValue={frame.position.x}
-          onBlur={handleChange}
+          defaultValue={0}
+          onBlur={(e) => handleChange({ position: { x: e.target.value, y: YRef.current.value } })}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') handleChange();
+            if (e.key === 'Enter') handleChange({ position: { x: e.target.value, y: YRef.current.value } });
           }}
         />
       </Label>
@@ -51,31 +61,51 @@ const RightPanel = ({ id }) => {
         Y{' '}
         <input
           type="number"
+          ref={YRef}
           min={0}
           max={999}
-          defaultValue={frame.position.y}
-          onBlur={handleChange}
+          defaultValue={0}
+          onBlur={(e) => handleChange({ position: { x: XRef.current.value, y: e.target.value } })}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') handleChange();
+            if (e.key === 'Enter') handleChange({ position: { x: XRef.current.value, y: e.target.value } });
           }}
         />
       </Label>
+      <Opacity value={frame.o} handleChange={handleChange} />
       <Label>
-        O{' '}
-        <input
-          type="number"
-          min={0}
-          max={100}
-          defaultValue={frame.o}
-          onBlur={handleChange}
-        />
-        <input type="range" min={0} max={100} defaultValue={frame.o} />
-      </Label>
-      <Label>
-        B <ColorPicker value={frame.fill} /> {frame.fill}
+        B <ColorPicker value={frame.fill} handleChange={handleChange} /> {frame.fill}
       </Label>
     </RightPanelWrapper>
   );
 };
 
-export default RightPanelControl;
+const Opacity = ({ value, handleChange }) => {
+  const handleChangeOpacity = (e) => {
+    handleChange({ o: (e.target.value / 100).toFixed(2) });
+  };
+  return (
+    <Label>
+      O{' '}
+      <input
+        type="number"
+        min={0}
+        max={100}
+        value={value * 100}
+        onChange={(e) => {
+          handleChangeOpacity(e);
+        }}
+      />
+      <input
+        type="range"
+        min={0}
+        max={100}
+        value={value * 100}
+        onChange={(e) => {
+          handleChangeOpacity(e);
+        }}
+      />
+    </Label>
+  );
+};
+
+export default RightPanel;
