@@ -66,16 +66,18 @@ export const frameSelector = selectorFamily({
       if (activeFrameId === frameId) return;
       // unselect the previous selected frame
       if (!!activeFrameId)
-        set(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, {
-          ...get(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom),
+        set(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, (frame)=>({
+          // ...get(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom),
+          ...frame,
           selected: false,
-        });
+        }));
       // select the new frame
       if (!!frameId)
-        set(frameStateArr.find((frameState) => frameState.id === frameId).atom, {
-          ...get(frameStateArr.find((frameState) => frameState.id === frameId).atom),
+        set(frameStateArr.find((frameState) => frameState.id === frameId).atom, (frame)=>({
+          // ...get(frameStateArr.find((frameState) => frameState.id === frameId).atom),
+          ...frame,
           selected: true,
-        });
+        }));
       // update the active frame id
       set(activeFrameIdState, frameId);
     },
@@ -98,10 +100,11 @@ export const pageSelector = selectorFamily({
       if (activePageId === pageId) return;
       // unselect the previous selected page
       if (!!activePageId)
-        set(pageStateArr.find((pageState) => pageState.id === activePageId).atom, {
-          ...get(pageStateArr.find((pageState) => pageState.id === activePageId).atom),
+        set(pageStateArr.find((pageState) => pageState.id === activePageId).atom, (page)=>({
+          // ...get(pageStateArr.find((pageState) => pageState.id === activePageId).atom),
+          ...page,
           selected: false,
-        });
+        }));
       // select the new page
       set(pageStateArr.find((pageState) => pageState.id === pageId).atom, {
         ...get(pageStateArr.find((pageState) => pageState.id === pageId).atom),
@@ -112,10 +115,11 @@ export const pageSelector = selectorFamily({
       const activeFrameId = get(activeFrameIdState);
       // unselect the frame
       if (!!activeFrameId)
-        set(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, {
-          ...get(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom),
+        set(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, (page)=>({
+          // ...get(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom),
+          ...page,
           selected: false,
-        });
+        }));
       set(activeFrameIdState, '');
     };
   },
