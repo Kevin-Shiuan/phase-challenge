@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 import document, { documentPages, documentFrames } from '../_mockData/document/index.js';
 
 // setup atoms for documents
@@ -8,6 +8,7 @@ export const documentState = atom({
 });
 
 // setup atoms for each frame and page
+// this should be replaced by a atomFamily
 const pageStateArr = documentPages.map((page, index) => {
   return {
     id: page.id,
@@ -18,7 +19,7 @@ const pageStateArr = documentPages.map((page, index) => {
   };
 });
 
-const frameStateArr = documentFrames.map((frame) => {
+export const frameStateArr = documentFrames.map((frame) => {
   return {
     id: frame.id,
     atom: atom({
@@ -128,6 +129,12 @@ export const frameState = selectorFamily({
     (frameId) =>
     ({ get }) => {
       return get(frameStateArr.find((frame) => frame.id === frameId).atom);
+    },
+  set:
+    (frameId) =>
+    ({ set, get }, newValue) => {
+      const frameAtom = frameStateArr.find((frame) => frame.id === frameId).atom;
+      set(frameAtom, { ...get(frameAtom), ...newValue });
     },
 });
 

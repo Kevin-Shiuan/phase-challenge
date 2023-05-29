@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RecoilRoot } from 'recoil';
+// sections
 import LeftPanel from './leftPanel/LeftPanel';
 import Canvas from './canvas/Canvas';
-import RightPanelControl from './rightPanel/RightPanel';
+import RightPanel from './rightPanel/RightPanel';
+import Pixi from './canvas/pixi/Pixi';
 
 const AppWrapper = styled.div`
   display: grid;
@@ -12,13 +15,17 @@ const AppWrapper = styled.div`
   height: 100vh;
   color: white;
 `;
+
 const App = () => {
   return (
-    <AppWrapper>
-      <LeftPanel />
-      <Canvas />
-      <RightPanelControl />
-    </AppWrapper>
+    <RecoilRoot>
+      <AppWrapper>
+        <LeftPanel />
+        {/* <Canvas /> */}
+        <Pixi />
+        <RightPanel />
+      </AppWrapper>
+    </RecoilRoot>
   );
 };
 
