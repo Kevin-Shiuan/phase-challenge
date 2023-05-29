@@ -6,6 +6,7 @@ import LeftPanel from './leftPanel/LeftPanel';
 import Canvas from './canvas/Canvas';
 import RightPanel from './rightPanel/RightPanel';
 import Pixi from './canvas/pixi/Pixi';
+import RecoilNexus from "recoil-nexus";
 
 const AppWrapper = styled.div`
   display: grid;
@@ -19,6 +20,7 @@ const AppWrapper = styled.div`
 const App = () => {
   return (
     <RecoilRoot>
+      <RecoilNexus />
       <AppWrapper>
         <LeftPanel />
         {/* <Canvas /> */}

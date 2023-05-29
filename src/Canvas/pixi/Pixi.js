@@ -6,7 +6,6 @@ import { Texture } from 'pixi.js';
 import {
   documentState,
   activePageState,
-  frameStateArr,
 } from '../../recoil';
 import Frame from './Frame';
 
@@ -14,15 +13,16 @@ const Pixi = () => {
   const document = useRecoilValue(documentState);
   const page = useRecoilValue(activePageState);
 
-  // import all the frame state
+  // import all the frame state --------------------
+  // method before using recoil-nexus
   // this is not the best way to do it
   // but it works for now
   // because React don't let us propagate parent contexts into child components from a custom renderers.
-  const frameStates = {};
-  for (let frame of frameStateArr) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    frameStates[frame.id] = useRecoilValue(frame.atom);
-  }
+  // const frameStates = {};
+  // for (let frame of frameStateArr) {
+  //   frameStates[frame.id] = useRecoilValue(frame.atom);
+  // }
+  // -----------------------------------------------
 
   useEffect(() => {
     console.log('pixi refreshed');
@@ -39,7 +39,7 @@ const Pixi = () => {
       }}
       width={800}
       height={750}
-      raf={false}
+      raf={true}
       renderOnComponentChange={true}
     >
       <Container interactive={true}>
@@ -47,7 +47,7 @@ const Pixi = () => {
         {/* <Sprite texture={Texture.WHITE} x={400} y={270} anchor={{ x: 0.5, y: 0.5 }} /> */}
         <Sprite texture={Texture.WHITE} tint={'#00FF00'} x={100} y={100} anchor={{ x: 0.5, y: 0.5 }} />
         {page.children.map((frame, index) => (
-          <Frame key={frame} frame={frameStates[frame]} />
+          <Frame key={frame} id={frame} />
         ))}
 
         <Container x={40} y={30}>

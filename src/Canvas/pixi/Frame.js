@@ -1,8 +1,15 @@
-import { Sprite } from '@pixi/react';
+import { Sprite, useTick } from '@pixi/react';
 import { Texture } from 'pixi.js';
+import { getRecoil, setRecoil } from 'recoil-nexus';
+import { frameState } from '../../recoil';
+import { useState } from 'react';
 
-const Frame = ({ frame }) => {
-  console.log('frame refreshed');
+export const Frame = ({ id }) => {
+  const [frame, setFrame] = useState(getRecoil(frameState(id)));
+  // continuously check for changes in frame
+  useTick(() => {
+    setFrame(getRecoil(frameState(id)));
+  });
 
   return (
     <Sprite
