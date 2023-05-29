@@ -4,7 +4,6 @@ import { activeFrameIdState, frameStateArr } from '../../recoil';
 
 export const handleFrameSelect = (id) => {
   const activeFrameId = getRecoil(activeFrameIdState);
-  console.log('activeFrameId', activeFrameId);
   if (activeFrameId === id) return;
   if (!!activeFrameId)
     setRecoil(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, (frame) => ({
@@ -17,4 +16,11 @@ export const handleFrameSelect = (id) => {
       selected: true,
     }));
   setRecoil(activeFrameIdState, id);
+};
+
+export const handleFrameUpdate = (id, newValue) => {
+  setRecoil(frameStateArr.find((frameState) => frameState.id === id).atom, (frame) => ({
+    ...frame,
+    ...newValue,
+  }));
 };
