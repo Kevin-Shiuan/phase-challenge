@@ -23,6 +23,7 @@ export const Frame = ({ id }) => {
     <Sprite
       texture={Texture.WHITE}
       tint={frame.fill}
+      alpha={frame.o}
       x={frame.position.x}
       y={frame.position.y}
       // anchor={{ x: 0.5, y: 0.5 }}
