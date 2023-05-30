@@ -1,12 +1,8 @@
-import React from 'react';
-import { useSetRecoilState, useRecoilValue } from 'recoil';
-// import styled from 'styled-components';
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { frameState, frameSelector, activePageState } from '../recoil';
 
-// const ElementsWrapper = styled.div``;
 const Elements = () => {
   const page = useRecoilValue(activePageState);
-
   return (
     <div>
       <h4>Elements</h4>
@@ -17,20 +13,53 @@ const Elements = () => {
   );
 };
 
-const Element = ({ id, indent=1 }) => {
+const Element = ({ id, indent = 1 }) => {
   // recoil
   // get the state of the desire frame
-  const frame = useRecoilValue(frameState(id));
+  const [frame, setFrame] = useRecoilState(frameState(id));
 
   // update function to update the selected frame
   const updateSlectedFrame = useSetRecoilState(frameSelector(id));
 
+  const handleRenaming = (e) => {
+    setFrame((frame) => ({ ...frame, renaming: true }));
+  };
+  const handleDoneRename = (newName) => {
+    if (newName === '') return cancelRename();
+    setFrame((frame) => ({ ...frame, name: newName, renaming: false }));
+  };
+  const cancelRename = () => {
+    setFrame((frame) => ({ ...frame, renaming: false }));
+  };
+
   return (
     <>
-    <div onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem', paddingLeft:`${indent*0.5}rem` }}>
-      {frame.selected ? <strong>{frame.name}</strong> : frame.name}
-    </div>
-    {frame.childrenIds.map((childrenId) => <Element key={childrenId} id={childrenId} indent={++indent}/>)}
+      <div onClick={(e) => updateSlectedFrame()} style={{ padding: '0.5rem', paddingLeft: `${indent * 0.5}rem` }}>
+        {frame.selected ? (
+          <div onDoubleClick={() => handleRenaming()}>
+            {frame.renaming ? (
+              <input
+                type="text"
+                className="bg-transparent rounded-sm outline outline-2 outline-offset-4"
+                defaultValue={frame.name}
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') cancelRename();
+                  if (e.key === 'Enter') handleDoneRename(e.currentTarget.value);
+                }}
+                onBlur={(e) => handleDoneRename(e.currentTarget.value)}
+              />
+            ) : (
+              <strong>{frame.name}</strong>
+            )}
+          </div>
+        ) : (
+          frame.name
+        )}
+      </div>
+      {frame.childrenIds.map((childrenId) => (
+        <Element key={childrenId} id={childrenId} indent={++indent} />
+      ))}
     </>
   );
 };
