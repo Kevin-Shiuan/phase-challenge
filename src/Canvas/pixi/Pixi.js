@@ -13,10 +13,7 @@ const Pixi = () => {
   const stageSize = { width: 800, height: 750 };
 
   // import all the frame state --------------------
-  // method before using recoil-nexus
-  // this is not the best way to do it
-  // but it works for now
-  // because React don't let us propagate parent contexts into child components from a custom renderers.
+  // method before using recoil-nexus, this is not the best way to do it
   // const frameStates = {};
   // for (let frame of frameStateArr) {
   //   frameStates[frame.id] = useRecoilValue(frame.atom);
@@ -34,21 +31,15 @@ const Pixi = () => {
         hello: true,
         forceCanvas: false,
         backgroundColor: parseInt(document.backgroundColor.slice(1), 16),
-        antialias: true,
-
       }}
       width={stageSize.width}
       height={stageSize.height}
     >
       {/* render a sprite to detect is user click on background */}
       <BackgroundSprite />
-        {page.children.map((frame) => (
-          <Frame key={frame} id={frame} />
-        ))}
-{/* 
-        <Container x={40} y={30}>
-          <Text text="Hello World" anchor={{ x: 0.5, y: 0.5 }} />
-        </Container> */}
+      {page.children.map((frame) => (
+        <Frame key={frame} id={frame} />
+      ))}
     </Stage>
   );
 };
