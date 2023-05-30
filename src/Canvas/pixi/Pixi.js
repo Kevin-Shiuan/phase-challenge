@@ -10,7 +10,7 @@ import BackgroundSprite from './BackgroundSprite';
 const Pixi = () => {
   const document = useRecoilValue(documentState);
   const page = useRecoilValue(activePageState);
-  const stageSize = { width: 800, height: 750 };
+  const stageSize = { width: 880, height: 750 };
 
   // import all the frame state --------------------
   // method before using recoil-nexus, this is not the best way to do it
