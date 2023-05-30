@@ -1,9 +1,13 @@
-import { Container, Sprite, useTick } from '@pixi/react';
+import { Container, Sprite, useTick, Graphics } from '@pixi/react';
 import { Texture } from 'pixi.js';
 import { getRecoil } from 'recoil-nexus';
 import { frameState } from '../../recoil';
 import { useRef, useState } from 'react';
 import { handleFrameSelect, handleFrameUpdate } from '../../recoil/pixiUtils';
+
+const borderOffset = 1;
+const borderWidth = 2;
+const borderColor = 0x0274ff;
 
 export const Frame = ({ id }) => {
   // set frame state, as we can't use recoil directly in pixi
@@ -25,11 +29,15 @@ export const Frame = ({ id }) => {
     parentPos.current = { x: parseInt(rawParentPos.x), y: parseInt(rawParentPos.y) };
     const newFrameProp = {
       ...raw,
-      position: { x: parseInt(raw.position.x) + parentPos.current.x, y: parseInt(raw.position.y) + parentPos.current.y },
+      position: {
+        x: parseInt(raw.position.x) + parentPos.current.x,
+        y: parseInt(raw.position.y) + parentPos.current.y,
+      },
     };
     setFrameProp(newFrameProp);
     parentId.current = rawParentId.includes('frame') ? rawParentId : null;
   });
+
   const onDragStart = (e) => {
     handleFrameSelect(id);
     if (!dragging.current) {
@@ -51,15 +59,10 @@ export const Frame = ({ id }) => {
     if (dragging.current) {
       //update frame position
       const newRawPosition = dragEvent.current.getLocalPosition(e.currentTarget.parent);
-      // const newPosition = {
-      //   x: Math.round(newRawPosition.x - dragOffset.current.x - parentPos.current.x),
-      //   y: Math.round(newRawPosition.y - dragOffset.current.y - parentPos.current.y),
-      // };
       const newPosition = {
         x: Math.round(newRawPosition.x - dragOffset.current.x - parentPos.current.x),
         y: Math.round(newRawPosition.y - dragOffset.current.y - parentPos.current.y),
       };
-      // console.log('newPosition', newPosition);
       handleFrameUpdate(id, { position: newPosition });
     }
   };
@@ -69,6 +72,21 @@ export const Frame = ({ id }) => {
       // setting position in container will cause weird behavior, so we set it in sprite instead
       eventMode="passive"
     >
+      {/* I use Graphics to simulate border */}
+      {!!frameProp.selected && (
+        <Graphics
+          draw={(g) => {
+            g.clear();
+            g.lineStyle(borderWidth, borderColor, 1);
+            g.drawRect(
+              frameProp.position.x - borderOffset,
+              frameProp.position.y - borderOffset,
+              frameProp.size.width + 2 * borderOffset,
+              frameProp.size.height + 2 * borderOffset
+            );
+          }}
+        />
+      )}
       <Sprite
         x={frameProp.position.x}
         y={frameProp.position.y}
@@ -80,7 +98,6 @@ export const Frame = ({ id }) => {
         eventMode="static"
         onclick={(e) => {
           handleFrameSelect(id);
-          console.log(parentPos);
         }}
         onmousedown={(e) => onDragStart(e)}
         onmouseup={onDragEnd}
