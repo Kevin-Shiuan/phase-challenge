@@ -17,7 +17,7 @@ const Elements = () => {
   );
 };
 
-const Element = ({ id }) => {
+const Element = ({ id, indent=1 }) => {
   // recoil
   // get the state of the desire frame
   const frame = useRecoilValue(frameState(id));
@@ -26,9 +26,12 @@ const Element = ({ id }) => {
   const updateSlectedFrame = useSetRecoilState(frameSelector(id));
 
   return (
-    <div onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem' }}>
+    <>
+    <div onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem', paddingLeft:`${indent*0.5}rem` }}>
       {frame.selected ? <strong>{frame.name}</strong> : frame.name}
     </div>
+    {frame.childrenIds.map((childrenId) => <Element key={childrenId} id={childrenId} indent={++indent}/>)}
+    </>
   );
 };
 
