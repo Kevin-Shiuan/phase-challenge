@@ -1,19 +1,19 @@
 {
   "type": "frame",
-  "id": "frameId1",
-  "name": "frame1",
+  "id": "frameId4",
+  "name": "frame4",
   "position": {
-    "x": 10,
+    "x": 20,
     "y": 10
   },
   "size": {
-    "width": 50,
-    "height": 50
+    "width": 20,
+    "height": 20
   },
-  "parentId": "pageId1",
+  "parentId": "frameId3",
   "childrenIds": [],
 
-  "fill": "#ff3333",
+  "fill": "#333333",
   "o": 1,
   "border": {
     "borderColor": "",

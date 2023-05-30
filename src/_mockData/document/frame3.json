@@ -11,7 +11,7 @@
     "height": 50
   },
   "parentId": "pageId1",
-  "childrenIds": [],
+  "childrenIds": ["frameId4"],
 
   "fill": "#3333ff",
   "o": 1,
