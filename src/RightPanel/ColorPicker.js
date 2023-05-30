@@ -17,7 +17,7 @@ const ColorInput = styled.input`
 ColorInput.defaultProps = {
   type: 'color',
 };
-const ColorPicker = ({ value, handleChange }) => {
+const ColorPicker = ({ labelName, value, handleChange }) => {
   const ref = useRef();
   const inputRef = useRef();
 
@@ -27,9 +27,17 @@ const ColorPicker = ({ value, handleChange }) => {
   }, [value]);
 
   return (
-    <ColorPickerWrapper ref={ref}>
-      <ColorInput defaultValue={value} ref={inputRef} onChange={(e) => handleChange({fill: e.target.value})} />
-    </ColorPickerWrapper>
+    <label className="grid grid-cols-[16px_auto_minmax(0,_1fr)] gap-2 m-1">
+      {labelName}
+      <ColorPickerWrapper ref={ref}>
+        <ColorInput
+          defaultValue={value}
+          ref={inputRef}
+          onChange={(e) => handleChange({ key: 'fill', value: e.target.value })}
+        />
+      </ColorPickerWrapper>
+      {value}
+    </label>
   );
 };
 

@@ -1,16 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import ColorPicker from './ColorPicker';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { activeFrameIdState, frameState } from '../recoil';
-const RightPanelWrapper = styled.div`
-  padding: 8px;
-`;
-const Label = styled.label`
-  display: grid;
-  grid-template-columns: 16px auto minmax(0, 1fr);
-  grid-gap: 8px;
-`;
+import NumberInput from './NumberInput';
+import NumberInputWithSlider from './NumberInputWithSlider';
 
 const RightPanel = () => {
   const activeFrameId = useRecoilValue(activeFrameIdState);
@@ -23,88 +16,68 @@ const RightPanelForm = ({ id }) => {
   // set ref to the input in order to update the value
   const XRef = useRef();
   const YRef = useRef();
+  const ORef = useRef();
+  const WRef = useRef();
+  const HRef = useRef();
   // update the value of the input either when the frame position changes or another frame is selected
   useEffect(() => {
     XRef.current.value = frame.position.x;
     YRef.current.value = frame.position.y;
+    ORef.current.value = Math.round(frame.o * 100);
+    WRef.current.value = frame.size.width;
+    HRef.current.value = frame.size.height;
   }, [frame]);
 
-  const handleChange = (properties) => {
-    Object.entries(properties).forEach(([key, value]) => {
-      console.log(frame[key]);
-      // value !=='' cant validate for empty position.x or position.y
-      // improve: should use other method to check
-      if (frame[key] !== value && value !== '') {
-        // improve: should validate the value
-        setFrame({ ...frame, ...properties });
-      }
-    });
+  const handlePropertyChange = ({ key, value }) => {
+    // check if the value is different from the current value
+    // improve: should validate the value
+    if (frame[key] !== value) setFrame({ ...frame, [key]: value });
+  };
+
+  const handlePositionChange = ({ x, y }) => {
+    if (frame.position.x !== x && !isNaN(x)) {
+      setFrame({ ...frame, position: { ...frame.position, x: x } });
+    }
+    if (frame.position.y !== y && !isNaN(y)) {
+      setFrame({ ...frame, position: { ...frame.position, y: y } });
+    }
+  };
+
+  const handleSizeChange = ({ width, height }) => {
+    if (frame.size.width !== width && !isNaN(width)) {
+      setFrame({ ...frame, size: { ...frame.size, width: width } });
+    }
+    if (frame.size.height !== height && !isNaN(height)) {
+      setFrame({ ...frame, size: { ...frame.size, height: height } });
+    }
   };
 
   return (
-    <RightPanelWrapper>
-      <Label>
-        X{' '}
-        <input
-          type="number"
-          ref={XRef}
+    <div className='p-1'>
+      <div className="mb-4">
+        <p>position</p>
+        <NumberInput labelName="X" propertyKey="x" handleChange={handlePositionChange} ref={XRef} />
+        <NumberInput labelName="Y" propertyKey="y" handleChange={handlePositionChange} ref={YRef} />
+      </div>
+      <div className="mb-4">
+        <p>size</p>
+        <NumberInput labelName="W" propertyKey="width" handleChange={handleSizeChange} ref={WRef} />
+        <NumberInput labelName="H" propertyKey="height" handleChange={handleSizeChange} ref={HRef} />
+      </div>
+      <div className="mb-4">
+        <p>style</p>
+        <NumberInputWithSlider
+          labelName="O"
+          propertyKey="o"
+          handleChange={handlePropertyChange}
+          value={frame.o}
+          ref={ORef}
           min={0}
-          max={999}
-          defaultValue={0}
-          onBlur={(e) => handleChange({ position: { x: e.target.value, y: YRef.current.value } })}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleChange({ position: { x: e.target.value, y: YRef.current.value } });
-          }}
+          max={100}
         />
-      </Label>
-      <Label>
-        Y{' '}
-        <input
-          type="number"
-          ref={YRef}
-          min={0}
-          max={999}
-          defaultValue={0}
-          onBlur={(e) => handleChange({ position: { x: XRef.current.value, y: e.target.value } })}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') handleChange({ position: { x: XRef.current.value, y: e.target.value } });
-          }}
-        />
-      </Label>
-      <Opacity value={frame.o} handleChange={handleChange} />
-      <Label>
-        B <ColorPicker value={frame.fill} handleChange={handleChange} /> {frame.fill}
-      </Label>
-    </RightPanelWrapper>
-  );
-};
-
-const Opacity = ({ value, handleChange }) => {
-  const handleChangeOpacity = (e) => {
-    handleChange({ o: (e.target.value / 100).toFixed(2) });
-  };
-  return (
-    <Label>
-      O{' '}
-      <input
-        type="number"
-        min={0}
-        max={100}
-        value={value * 100}
-        onChange={(e) => {
-          handleChangeOpacity(e);
-        }}
-      />
-      <input
-        type="range"
-        min={0}
-        max={100}
-        value={value * 100}
-        onChange={(e) => {
-          handleChangeOpacity(e);
-        }}
-      />
-    </Label>
+        <ColorPicker labelName={'B'} value={frame.fill} handleChange={handlePropertyChange} />
+      </div>
+    </div>
   );
 };
 
