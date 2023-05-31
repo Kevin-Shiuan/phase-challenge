@@ -82,8 +82,8 @@ export const Frame = ({ id }) => {
             g.drawRect(
               frameProp.position.x - outlineOffset,
               frameProp.position.y - outlineOffset,
-              frameProp.size.width + 2 * outlineOffset,
-              frameProp.size.height + 2 * outlineOffset
+              parseInt(frameProp.size.width) + 2 * outlineOffset,
+              parseInt(frameProp.size.height) + 2 * outlineOffset
             );
           }}
         />
