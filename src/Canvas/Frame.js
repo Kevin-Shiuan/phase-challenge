@@ -3,8 +3,8 @@ import { Texture } from 'pixi.js';
 import { useRef, useState } from 'react';
 import { getRecoil } from 'recoil-nexus';
 
-import { frameState } from '../../recoil';
-import { handleFrameSelect, handleFrameUpdate } from '../../recoil/pixiUtils';
+import { frameState } from '../recoil';
+import { handleFrameSelect, handleFrameUpdate } from '../recoil/pixiUtils';
 
 const outlineOffset = 1;
 const outlineWidth = 2;

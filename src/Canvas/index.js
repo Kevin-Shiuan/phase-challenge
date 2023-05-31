@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { activePageState, documentState } from '../../recoil';
+import { activePageState, documentState } from '../recoil';
 import BackgroundSprite from './BackgroundSprite';
 import Frame from './Frame';
 
