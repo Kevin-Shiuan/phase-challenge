@@ -15,7 +15,7 @@ const Pages = () => {
   return (
     <PagesWrapper>
       <h4>Pages</h4>
-      {document.pages.map((page) => (
+      {document.pageIds.map((page) => (
         <Page key={page} id={page} />
       ))}
     </PagesWrapper>
