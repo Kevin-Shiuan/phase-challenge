@@ -21,7 +21,6 @@ const App = () => (
       <RecoilNexus />
       <AppWrapper>
         <LeftPanel />
-        {/* <Canvas /> */}
         <Pixi />
         <RightPanel />
       </AppWrapper>
