@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { Stage, Container, Sprite, Text } from '@pixi/react';
-import { Texture } from 'pixi.js';
+import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { Stage } from '@pixi/react';
 
-import { documentState, activePageState, frameSelector } from '../../recoil';
+import { documentState, activePageState } from '../../recoil';
 import Frame from './Frame';
 import BackgroundSprite from './BackgroundSprite';
 

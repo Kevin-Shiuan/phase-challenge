@@ -1,9 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
 // sections
 import LeftPanel from './leftPanel/LeftPanel';
-import Canvas from './canvas/Canvas';
 import RightPanel from './rightPanel/RightPanel';
 import Pixi from './canvas/pixi/Pixi';
 import RecoilNexus from "recoil-nexus";
@@ -17,8 +15,7 @@ const AppWrapper = styled.div`
   color: white;
 `;
 
-const App = () => {
-  return (
+const App = () => (
     <RecoilRoot>
       <RecoilNexus />
       <AppWrapper>
@@ -29,6 +26,5 @@ const App = () => {
       </AppWrapper>
     </RecoilRoot>
   );
-};
 
 export default App;

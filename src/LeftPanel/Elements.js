@@ -1,27 +1,29 @@
+import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
 import { frameState, frameSelector, activePageState } from '../recoil';
+
+const ElementsWrapper = styled.div`
+`;
 
 const Elements = () => {
   const page = useRecoilValue(activePageState);
   return (
-    <div>
+    <ElementsWrapper>
       <h4>Elements</h4>
       {page.children.map((frame) => (
         <Element key={frame} id={frame} />
       ))}
-    </div>
+    </ElementsWrapper>
   );
 };
 
 const Element = ({ id, indent = 1 }) => {
-  // recoil
-  // get the state of the desire frame
+  // get the state of the desire frame from recoil
   const [frame, setFrame] = useRecoilState(frameState(id));
-
   // update function to update the selected frame
   const updateSlectedFrame = useSetRecoilState(frameSelector(id));
 
-  const handleRenaming = (e) => {
+  const handleRenaming = () => {
     setFrame((frame) => ({ ...frame, renaming: true }));
   };
   const handleDoneRename = (newName) => {
@@ -34,9 +36,9 @@ const Element = ({ id, indent = 1 }) => {
 
   return (
     <>
-      <div onClick={(e) => updateSlectedFrame()} style={{ padding: '0.5rem', paddingLeft: `${indent * 0.5}rem` }}>
+      <div onClick={updateSlectedFrame} style={{ padding: '0.5rem', paddingLeft: `${indent * 0.5}rem` }}>
         {frame.selected ? (
-          <div onDoubleClick={() => handleRenaming()}>
+          <div onDoubleClick={handleRenaming}>
             {frame.renaming ? (
               <input
                 type="text"

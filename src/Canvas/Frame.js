@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { frameSelector, frameState } from '../recoil';

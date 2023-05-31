@@ -1,0 +1,78 @@
+module.exports = {
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+  },
+
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+  ],
+  overrides: [],
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+  plugins: ["react", "react-hooks"],
+  rules: {
+    "arrow-body-style": 1,
+    "default-param-last": 0,
+    "import/no-cycle": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "no-alert": 0,
+    "no-console": 0,
+    "no-extra-boolean-cast": 1,
+    "no-nested-ternary": 0,
+    "no-new": 0,
+    "no-param-reassign": 0,
+    "no-restricted-exports": 0,
+    "no-shadow": 0,
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [
+      1,
+      {
+        ignoreRestSiblings: false,
+      },
+    ],
+    "no-use-before-define": 0,
+    "no-unsafe-optional-chaining": 0,
+    "prefer-destructuring": [
+      1,
+      {
+        array: false,
+        object: true,
+      },
+    ],
+    "react/button-has-type": 1,
+    "react/destructuring-assignment": 0,
+    "react/forbid-prop-types": 0,
+    "react/function-component-definition": 0,
+    "react/jsx-curly-brace-presence": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-key": 1,
+    "react/jsx-no-constructed-context-values": 0,
+    "react/jsx-no-duplicate-props": 0,
+    "react/jsx-no-useless-fragment": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/no-array-index-key": 0,
+    "react/no-children-prop": 0,
+    "react/no-unescaped-entities": 0,
+    "react/no-unstable-nested-components": 0,
+    "react/no-unused-prop-types": 1,
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/require-default-props": 0,
+  },
+};

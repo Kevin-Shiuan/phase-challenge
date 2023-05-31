@@ -26,7 +26,7 @@ const Page = ({ id }) => {
   // update function to update the selected frame
   const updateSlectedFrame = useSetRecoilState(pageSelector(id));
 
-  const handleRenaming = (e) => {
+  const handleRenaming = () => {
     setPage((page) => ({ ...page, renaming: true }));
   };
   const handleDoneRename = (newName) => {
@@ -40,7 +40,7 @@ const Page = ({ id }) => {
   return (
     <div key={page.id} id={page.id} onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem' }}>
       {page.selected ? (
-        <div onDoubleClick={() => handleRenaming()}>
+        <div onDoubleClick={handleRenaming}>
           {page.renaming ? (
             <input
               type="text"

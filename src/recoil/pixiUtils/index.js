@@ -5,12 +5,12 @@ import { activeFrameIdState, frameStateArr } from '../../recoil';
 export const handleFrameSelect = (id) => {
   const activeFrameId = getRecoil(activeFrameIdState);
   if (activeFrameId === id) return;
-  if (!!activeFrameId)
+  if (activeFrameId)
     setRecoil(frameStateArr.find((frameState) => frameState.id === activeFrameId).atom, (frame) => ({
       ...frame,
       selected: false,
     }));
-  if (!!id)
+  if (id)
     setRecoil(frameStateArr.find((frameState) => frameState.id === id).atom, (frame) => ({
       ...frame,
       selected: true,

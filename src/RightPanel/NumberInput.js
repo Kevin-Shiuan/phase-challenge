@@ -1,7 +1,6 @@
 import { forwardRef } from 'react';
 
-const NumberInput = forwardRef(({ labelName, propertyKey, min = 0, max = 800, handleChange }, ref) => {
-  return (
+const NumberInput = forwardRef(({ labelName, propertyKey, min = 0, max = 800, handleChange }, ref) => 
     <label className="grid grid-cols-[16px_3rem_minmax(0,_1fr)] gap-2 m-1">
       {labelName}
       <input
@@ -16,7 +15,8 @@ const NumberInput = forwardRef(({ labelName, propertyKey, min = 0, max = 800, ha
         }}
       />
     </label>
-  );
-});
+);
+
+NumberInput.displayName = 'NumberInput';
 
 export default NumberInput;

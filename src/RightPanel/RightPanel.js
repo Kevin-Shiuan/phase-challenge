@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import ColorPicker from './ColorPicker';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { activeFrameIdState, frameState } from '../recoil';
@@ -7,7 +7,7 @@ import NumberInputWithSlider from './NumberInputWithSlider';
 
 const RightPanel = () => {
   const activeFrameId = useRecoilValue(activeFrameIdState);
-  return !!activeFrameId ? <RightPanelForm id={activeFrameId} /> : null;
+  return activeFrameId ? <RightPanelForm id={activeFrameId} /> : null;
 };
 
 const RightPanelForm = ({ id }) => {
