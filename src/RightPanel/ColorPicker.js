@@ -1,5 +1,7 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+
+import { PropEditLabel } from '../components/PropEditLabel';
 
 const ColorPickerWrapper = styled.div`
   width: 16px;
@@ -14,6 +16,11 @@ const ColorInput = styled.input`
   height: 32px;
   border: none;
 `;
+// overide the style
+const ColorPickerLabel = styled(PropEditLabel)`
+  grid-template-columns: 16px auto minmax(0, 1fr);
+`;
+
 ColorInput.defaultProps = {
   type: 'color',
 };
@@ -27,7 +34,7 @@ const ColorPicker = ({ labelName, value, handleChange }) => {
   }, [value]);
 
   return (
-    <label className="grid grid-cols-[16px_auto_minmax(0,_1fr)] gap-2 m-1">
+    <ColorPickerLabel>
       {labelName}
       <ColorPickerWrapper ref={ref}>
         <ColorInput
@@ -37,7 +44,7 @@ const ColorPicker = ({ labelName, value, handleChange }) => {
         />
       </ColorPickerWrapper>
       {value}
-    </label>
+    </ColorPickerLabel>
   );
 };
 

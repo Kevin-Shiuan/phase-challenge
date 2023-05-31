@@ -1,9 +1,24 @@
 import { useEffect, useRef } from 'react';
-import ColorPicker from './ColorPicker';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import styled from 'styled-components';
+
 import { activeFrameIdState, frameState } from '../recoil';
+import ColorPicker from './ColorPicker';
 import NumberInput from './NumberInput';
 import NumberInputWithSlider from './NumberInputWithSlider';
+
+const RightPanelWrapper = styled.div`
+  padding: 0.25rem;
+`;
+
+const RightPanelSection = styled.div`
+  margin-bottom: 1rem;
+`;
+
+const SectionName = styled.h4`
+  margin-left: 0.25rem;
+  margin-bottom: 0.25rem;
+`;
 
 const RightPanel = () => {
   const activeFrameId = useRecoilValue(activeFrameIdState);
@@ -19,6 +34,7 @@ const RightPanelForm = ({ id }) => {
   const ORef = useRef();
   const WRef = useRef();
   const HRef = useRef();
+
   // update the value of the input either when the frame position changes or another frame is selected
   useEffect(() => {
     XRef.current.value = frame.position.x;
@@ -29,7 +45,6 @@ const RightPanelForm = ({ id }) => {
   }, [frame]);
 
   const handlePropertyChange = ({ key, value }) => {
-    // check if the value is different from the current value
     // improve: should validate the value
     if (frame[key] !== value) setFrame({ ...frame, [key]: value });
   };
@@ -53,19 +68,19 @@ const RightPanelForm = ({ id }) => {
   };
 
   return (
-    <div className='p-1'>
-      <div className="mb-4">
-        <p>position</p>
+    <RightPanelWrapper>
+      <RightPanelSection>
+        <SectionName>position</SectionName>
         <NumberInput labelName="X" propertyKey="x" handleChange={handlePositionChange} ref={XRef} />
         <NumberInput labelName="Y" propertyKey="y" handleChange={handlePositionChange} ref={YRef} />
-      </div>
-      <div className="mb-4">
-        <p>size</p>
+      </RightPanelSection>
+      <RightPanelSection>
+        <SectionName>size</SectionName>
         <NumberInput labelName="W" propertyKey="width" handleChange={handleSizeChange} ref={WRef} />
         <NumberInput labelName="H" propertyKey="height" handleChange={handleSizeChange} ref={HRef} />
-      </div>
-      <div className="mb-4">
-        <p>style</p>
+      </RightPanelSection>
+      <RightPanelSection>
+        <SectionName>style</SectionName>
         <NumberInputWithSlider
           labelName="O"
           propertyKey="o"
@@ -76,8 +91,8 @@ const RightPanelForm = ({ id }) => {
           max={100}
         />
         <ColorPicker labelName={'B'} value={frame.fill} handleChange={handlePropertyChange} />
-      </div>
-    </div>
+      </RightPanelSection>
+    </RightPanelWrapper>
   );
 };
 

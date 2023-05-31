@@ -1,9 +1,10 @@
+import { useRecoilState,useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
-import { frameState, frameSelector, activePageState } from '../recoil';
 
-const ElementsWrapper = styled.div`
-`;
+import { RenameInput } from '../components/RenameInput';
+import { activePageState,frameSelector, frameState } from '../recoil';
+
+const ElementsWrapper = styled.div``;
 
 const Elements = () => {
   const page = useRecoilValue(activePageState);
@@ -40,9 +41,8 @@ const Element = ({ id, indent = 1 }) => {
         {frame.selected ? (
           <div onDoubleClick={handleRenaming}>
             {frame.renaming ? (
-              <input
+              <RenameInput
                 type="text"
-                className="bg-transparent rounded-sm outline outline-2 outline-offset-4"
                 defaultValue={frame.name}
                 autoFocus
                 onKeyDown={(e) => {

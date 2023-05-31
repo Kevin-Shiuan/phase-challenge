@@ -1,8 +1,10 @@
 import { forwardRef } from 'react';
 
+import { PropEditLabel } from '../components/PropEditLabel';
+
 const NumberInputWithSlider = forwardRef(
   ({ labelName, propertyKey, value = 0, min = 0, max = 100, handleChange }, ref) => 
-      <label className="grid grid-cols-[16px_3rem_minmax(0,_1fr)] gap-2 m-1">
+      <PropEditLabel>
         {labelName}
         <input
           type="number"
@@ -21,7 +23,7 @@ const NumberInputWithSlider = forwardRef(
           value={Math.round(value * 100)}
           onChange={(e) => handleChange({ key: propertyKey, value: (e.target.value / 100).toFixed(2) })}
         />
-      </label>
+      </PropEditLabel>
 );
 
 NumberInputWithSlider.displayName = 'NumberInputWithSlider';
