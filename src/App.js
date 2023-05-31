@@ -1,10 +1,11 @@
-import styled from 'styled-components';
 import { RecoilRoot } from 'recoil';
+import RecoilNexus from "recoil-nexus";
+import styled from 'styled-components';
+
+import Pixi from './canvas/pixi/Pixi';
 // sections
 import LeftPanel from './leftPanel/LeftPanel';
 import RightPanel from './rightPanel/RightPanel';
-import Pixi from './canvas/pixi/Pixi';
-import RecoilNexus from "recoil-nexus";
 
 const AppWrapper = styled.div`
   display: grid;

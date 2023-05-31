@@ -1,5 +1,6 @@
 import { atom, selector, selectorFamily } from 'recoil';
-import document, { documentPages, documentFrames } from '../_mockData/document/index.js';
+
+import document, { documentFrames,documentPages } from '../_mockData/document/index.js';
 
 // setup atoms for documents
 export const documentState = atom({

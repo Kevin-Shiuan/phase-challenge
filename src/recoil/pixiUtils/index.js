@@ -1,5 +1,6 @@
 // this file contains utility functions for Pixi.js to use Recoil
 import { getRecoil, setRecoil } from 'recoil-nexus';
+
 import { activeFrameIdState, frameStateArr } from '../../recoil';
 
 export const handleFrameSelect = (id) => {

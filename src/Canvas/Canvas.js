@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+
 // recoil's state
 import { activePageState, frameSelector } from '../recoil';
 // components

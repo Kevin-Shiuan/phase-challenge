@@ -1,6 +1,8 @@
-import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState,useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { documentState, pageState, pageSelector } from '../recoil';
+
+import { RenameInput } from '../components/RenameInput';
+import { documentState, pageSelector,pageState } from '../recoil';
 
 const PagesWrapper = styled.div`
   border-bottom: 1px solid;
@@ -42,9 +44,8 @@ const Page = ({ id }) => {
       {page.selected ? (
         <div onDoubleClick={handleRenaming}>
           {page.renaming ? (
-            <input
+            <RenameInput
               type="text"
-              className="bg-transparent rounded-sm outline outline-2 outline-offset-4"
               defaultValue={page.name}
               autoFocus
               onKeyDown={(e) => {

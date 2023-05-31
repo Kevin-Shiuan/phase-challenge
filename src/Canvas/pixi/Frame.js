@@ -1,8 +1,9 @@
-import { Container, Sprite, useTick, Graphics } from '@pixi/react';
+import { Container, Graphics,Sprite, useTick } from '@pixi/react';
 import { Texture } from 'pixi.js';
-import { getRecoil } from 'recoil-nexus';
-import { frameState } from '../../recoil';
 import { useRef, useState } from 'react';
+import { getRecoil } from 'recoil-nexus';
+
+import { frameState } from '../../recoil';
 import { handleFrameSelect, handleFrameUpdate } from '../../recoil/pixiUtils';
 
 const outlineOffset = 1;

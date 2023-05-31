@@ -1,10 +1,10 @@
+import { Stage } from '@pixi/react';
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { Stage } from '@pixi/react';
 
-import { documentState, activePageState } from '../../recoil';
-import Frame from './Frame';
+import { activePageState,documentState } from '../../recoil';
 import BackgroundSprite from './BackgroundSprite';
+import Frame from './Frame';
 
 const Pixi = () => {
   const document = useRecoilValue(documentState);

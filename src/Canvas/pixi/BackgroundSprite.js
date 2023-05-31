@@ -1,5 +1,6 @@
 import { Sprite, useApp } from '@pixi/react';
 import { Texture } from 'pixi.js';
+
 import { handleFrameSelect } from '../../recoil/pixiUtils';
 
 

@@ -1,8 +1,9 @@
-import styled from 'styled-components';
 import { useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+
+import { frameSelector } from '../recoil';
 // recoil's state
 import Elements from './Elements';
-import { frameSelector } from '../recoil';
 // components
 import Pages from './Pages';
 
