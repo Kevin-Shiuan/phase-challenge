@@ -5,9 +5,9 @@ import { frameState } from '../../recoil';
 import { useRef, useState } from 'react';
 import { handleFrameSelect, handleFrameUpdate } from '../../recoil/pixiUtils';
 
-const borderOffset = 1;
-const borderWidth = 2;
-const borderColor = 0x0274ff;
+const outlineOffset = 1;
+const outlineWidth = 2;
+const outlineColor = 0x0274ff;
 
 export const Frame = ({ id }) => {
   // set frame state, as we can't use recoil directly in pixi
@@ -72,17 +72,17 @@ export const Frame = ({ id }) => {
       // setting position in container will cause weird behavior, so we set it in sprite instead
       eventMode="passive"
     >
-      {/* I use Graphics to simulate border */}
+      {/* I use Graphics to simulate outline */}
       {!!frameProp.selected && (
         <Graphics
           draw={(g) => {
             g.clear();
-            g.lineStyle(borderWidth, borderColor, 1);
+            g.lineStyle(outlineWidth, outlineColor, 1);
             g.drawRect(
-              frameProp.position.x - borderOffset,
-              frameProp.position.y - borderOffset,
-              frameProp.size.width + 2 * borderOffset,
-              frameProp.size.height + 2 * borderOffset
+              frameProp.position.x - outlineOffset,
+              frameProp.position.y - outlineOffset,
+              frameProp.size.width + 2 * outlineOffset,
+              frameProp.size.height + 2 * outlineOffset
             );
           }}
         />
@@ -96,7 +96,7 @@ export const Frame = ({ id }) => {
         width={frameProp.size.width}
         height={frameProp.size.height}
         eventMode="static"
-        onclick={(e) => {
+        onclick={() => {
           handleFrameSelect(id);
         }}
         onmousedown={(e) => onDragStart(e)}
