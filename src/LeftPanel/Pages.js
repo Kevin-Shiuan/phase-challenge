@@ -1,8 +1,8 @@
-import { useRecoilState,useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { RenameInput } from '../components/RenameInput';
-import { documentState, pageSelector,pageState } from '../recoil';
+import { documentState, pageState, selectPage } from '../recoil';
 
 const PagesWrapper = styled.div`
   border-bottom: 1px solid;
@@ -26,24 +26,24 @@ const Page = ({ id }) => {
   // get the state of the desire page from recoil
   const [page, setPage] = useRecoilState(pageState(id));
   // update function to update the selected frame
-  const updateSlectedFrame = useSetRecoilState(pageSelector(id));
+  const updateSlectedFrame = useSetRecoilState(selectPage(id));
 
   const handleRenaming = () => {
-    setPage((page) => ({ ...page, renaming: true }));
+    setPage((page) => ({ ...page, isRenaming: true }));
   };
   const handleDoneRename = (newName) => {
     if (newName === '') return cancelRename();
-    setPage((page) => ({ ...page, name: newName, renaming: false }));
+    setPage((page) => ({ ...page, name: newName, isRenaming: false }));
   };
   const cancelRename = () => {
-    setPage((page) => ({ ...page, renaming: false }));
+    setPage((page) => ({ ...page, isRenaming: false }));
   };
 
   return (
     <div key={page.id} id={page.id} onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem' }}>
-      {page.selected ? (
+      {page.isSelected ? (
         <div onDoubleClick={handleRenaming}>
-          {page.renaming ? (
+          {page.isRenaming ? (
             <RenameInput
               type="text"
               defaultValue={page.name}

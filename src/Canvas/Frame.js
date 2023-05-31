@@ -74,7 +74,7 @@ export const Frame = ({ id }) => {
       eventMode="passive"
     >
       {/* I use Graphics to simulate outline */}
-      {!!frameProp.selected && (
+      {!!frameProp.isSelected && (
         <Graphics
           draw={(g) => {
             g.clear();
