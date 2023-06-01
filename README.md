@@ -128,16 +128,15 @@ As can be expected, this will affect the performance of the canvas section. But 
 > 1. Keep using React components to represent their Pixi object in canvas, and not returning/rendering DOM elements. This will be easier for states management.
 > 1. Then in each Elements' React component, update the respective Pixi object they representing when states are changed, which is like React components usually do by re-rendering DOM elements.
 
->> I thought that ReactPixi already handle the states change as above, but I realized that it is not the case only when I start implementing the canvas section with it. I could have use the method stated above from the beginning, but I already spend too much time on ReactPixi, so I decided to keep using it in this project.
+> I thought that ReactPixi already handle the states change as above, but I realized that it is not the case only when I start implementing the canvas section with it. I could have use the method stated above from the beginning, but I already spend too much time on ReactPixi, so I decided to keep using it in this project.
 
 ## Suggestions for Improvement & Known Issues
 ### suggestions:
 1. Switch to TypeScript (I am rushing at the start and forgot sbout it...)
 1. remove reactPixi, use pixi.js directly and use the method stated above to address the performance issue
-1. use atom-family to create the states, for better readability and maintainability.
-1. create Recoil states in run time, so that the states can be created dynamically
+1. create Recoil states in run time, so that the states can be created dynamically, but this require backend database to support this features
 1. use Recoil's selector to create functions that get the *properties*, *name*, *selection state* and *renaming state* from atom, so that update one of them wont trigger the other, so that related component wont be re-rendered, further improving the performance
 
 # issues:
 1. when key in new properties value at right panel, unselect the element by clicking blank area at left panel will not save the new properties value
-1. resizing the loaded web page won't responsively resize Pixi Canvas, but will adjust size only after refreshing
+1. resizing the loaded web page won't responsively resize Pixi Canvas, but will adjust size only after refreshing (this is because size of Stage can't be dynamically changed)
