@@ -1,0 +1,23 @@
+{
+  "type": "frame",
+  "id": "frameId7",
+  "name": "frame7",
+  "position": {
+    "x": 20,
+    "y": 10
+  },
+  "size": {
+    "width": 30,
+    "height": 20
+  },
+  "parentId": "frameId6",
+  "childrenIds": [],
+
+  "fill": "#124662",
+  "o": 0.3,
+  "border": {
+    "borderColor": "",
+    "borderWidth": 0,
+    "borderRadius": 0
+  }
+}

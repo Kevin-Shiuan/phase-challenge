@@ -3,5 +3,5 @@
   "id": "pageId1",
   "name": "Page 1",
   "documentId": "documentId",
-  "children": ["frameId1", "frameId2", "frameId3"]
+  "children": ["frameId1", "frameId2", "frameId3", "frameId5"]
 }

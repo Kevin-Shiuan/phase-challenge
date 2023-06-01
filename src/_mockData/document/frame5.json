@@ -1,0 +1,23 @@
+{
+  "type": "frame",
+  "id": "frameId5",
+  "name": "frame5",
+  "position": {
+    "x": 200,
+    "y": 160
+  },
+  "size": {
+    "width": 200,
+    "height": 100
+  },
+  "parentId": "pageId1",
+  "childrenIds": ["frameId6"],
+
+  "fill": "#124694",
+  "o": 1,
+  "border": {
+    "borderColor": "",
+    "borderWidth": 0,
+    "borderRadius": 0
+  }
+}
