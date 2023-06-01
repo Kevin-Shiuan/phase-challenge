@@ -10,7 +10,7 @@ const outlineOffset = 1;
 const outlineWidth = 2;
 const outlineColor = 0x0274ff;
 
-export const Frame = ({ id }) => {
+export const Frame = ({ id, offsetToStage={ x: 0, y: 0 } }) => {
   // set frame state, as we can't use recoil directly in pixi
   // React don't let us propagate parent contexts in child components from a custom renderers (ReactPixi use custom renderer)
   // pls refer to https://pixijs.io/pixi-react/context-bridge/
@@ -19,24 +19,18 @@ export const Frame = ({ id }) => {
   let dragging = useRef(false); // store dragging state
   let dragEvent = useRef(null); // store drag event to calculate total drag distance
   let dragOffset = useRef({ x: 0, y: 0 }); // store offset between mouse and frame position, as anchor is default to(0,0)
-  let parentId = useRef(null); // store parent id
-  let parentPos = useRef({ x: 0, y: 0 }); // store parent position
 
   // continuously check for changes in frame state from React
   useTick(() => {
     const raw = getRecoil(frameState(id));
-    const rawParentId = raw?.parentId || null;
-    const rawParentPos = parentId.current ? getRecoil(frameState(rawParentId)).position : { x: 0, y: 0 };
-    parentPos.current = { x: parseInt(rawParentPos.x), y: parseInt(rawParentPos.y) };
     const newFrameProp = {
       ...raw,
       position: {
-        x: parseInt(raw.position.x) + parentPos.current.x,
-        y: parseInt(raw.position.y) + parentPos.current.y,
+        x: parseInt(raw.position.x) + parseInt(offsetToStage.x),
+        y: parseInt(raw.position.y) + parseInt(offsetToStage.y),
       },
     };
     setFrameProp(newFrameProp);
-    parentId.current = rawParentId.includes('frame') ? rawParentId : null;
   });
 
   const onDragStart = (e) => {
@@ -61,8 +55,8 @@ export const Frame = ({ id }) => {
       //update frame position
       const newRawPosition = dragEvent.current.getLocalPosition(e.currentTarget.parent);
       const newPosition = {
-        x: Math.round(newRawPosition.x - dragOffset.current.x - parentPos.current.x),
-        y: Math.round(newRawPosition.y - dragOffset.current.y - parentPos.current.y),
+        x: Math.round(newRawPosition.x - dragOffset.current.x - offsetToStage.x),
+        y: Math.round(newRawPosition.y - dragOffset.current.y - offsetToStage.y),
       };
       handleFrameUpdate(id, { position: newPosition });
     }
@@ -106,20 +100,10 @@ export const Frame = ({ id }) => {
         onglobalmousemove={(e) => onDragging(e)}
       />
       {frameProp.childrenIds.map((childId) => (
-        <Frame key={childId} id={childId} />
+        <Frame key={childId} id={childId} offsetToStage={frameProp.position}/>
       ))}
     </Container>
   );
 };
 
 export default Frame;
-
-// function useIteration(incr = 0.1){
-//   const [i, setI] = useState(0);
-
-//   useTick((delta) => {
-//     setI(i => i + incr * delta);
-//   });
-
-//   return i;
-// };
