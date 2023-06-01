@@ -5,10 +5,10 @@ import { activeFrameIdState, frameState } from './Frame.js';
 
 // setup atoms for each page
 export const pageState = atomFamily({
-  key: "pageState",
+  key: 'pageState',
   default: (id) => {
     const page = documentPages.find((page) => page.id === id);
-    return { ...page, isSelected: false, isRenaming: false };
+    return { ...page, isSelected: document.pageIds[0] === page.id, isRenaming: false };
   },
 });
 
@@ -20,13 +20,13 @@ export const activePageIdState = atom({
 
 // return state of selected page
 export const activePageState = selector({
-  key: "activePageState",
+  key: 'activePageState',
   get: ({ get }) => get(pageState(get(activePageIdState))),
 });
 
 // functions to update the selected page
 export const selectPage = selectorFamily({
-  key: "selectPage",
+  key: 'selectPage',
   get:
     (pageId) =>
     ({ get }) => ({
@@ -53,6 +53,6 @@ export const selectPage = selectorFamily({
       const activeFrameId = get(activeFrameIdState);
       // unselect the frame
       if (activeFrameId) set(frameState(activeFrameId), (frame) => ({ ...frame, isSelected: false }));
-      set(activeFrameIdState, "");
+      set(activeFrameIdState, '');
     },
 });
