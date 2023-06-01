@@ -25,8 +25,8 @@ const Pages = () => {
 const Page = ({ id }) => {
   // get the state of the desire page from recoil
   const [page, setPage] = useRecoilState(pageState(id));
-  // update function to update the selected frame
-  const updateSlectedFrame = useSetRecoilState(selectPage(id));
+  // update function to update the selected page
+  const updateSlectedPage = useSetRecoilState(selectPage(id));
 
   const handleRenaming = () => {
     setPage((page) => ({ ...page, isRenaming: true }));
@@ -40,7 +40,7 @@ const Page = ({ id }) => {
   };
 
   return (
-    <div key={page.id} id={page.id} onClick={() => updateSlectedFrame()} style={{ padding: '0.5rem' }}>
+    <div key={page.id} id={page.id} onClick={() => updateSlectedPage()} style={{ padding: '0.5rem' }}>
       {page.isSelected ? (
         <div onDoubleClick={handleRenaming}>
           {page.isRenaming ? (
