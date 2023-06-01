@@ -6,6 +6,7 @@ import LeftPanel from '../LeftPanel';
 
 describe('LeftPanel', () => {
   it('renders Pages and Elements components', () => {
+    
     render(
       <RecoilRoot>
         <LeftPanel />
